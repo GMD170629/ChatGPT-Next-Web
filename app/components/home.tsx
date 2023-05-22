@@ -33,6 +33,10 @@ export function Loading(props: { noLogo?: boolean }) {
   );
 }
 
+const Login = dynamic(async () => await import("./login"), {
+  loading: () => <Loading noLogo />,
+});
+
 const Settings = dynamic(async () => (await import("./settings")).Settings, {
   loading: () => <Loading noLogo />,
 });
@@ -123,6 +127,7 @@ function Screen() {
 
       <div className={styles["window-content"]} id={SlotID.AppBody}>
         <Routes>
+          <Route path={Path.Login} element={<Login />} />
           <Route path={Path.Home} element={<Chat />} />
           <Route path={Path.NewChat} element={<NewChat />} />
           <Route path={Path.Masks} element={<MaskPage />} />
