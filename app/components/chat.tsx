@@ -352,16 +352,16 @@ export function ChatActions(props: {
           <BottomIcon />
         </div>
       )}
-      {props.hitBottom && (
+      {/*{props.hitBottom && (
         <div
           className={`${chatStyle["chat-input-action"]} clickable`}
           onClick={props.showPromptModal}
         >
           <BrainIcon />
         </div>
-      )}
+      )}*/}
 
-      <div
+      {/*   <div
         className={`${chatStyle["chat-input-action"]} clickable`}
         onClick={nextTheme}
       >
@@ -372,7 +372,7 @@ export function ChatActions(props: {
         ) : theme === Theme.Dark ? (
           <DarkIcon />
         ) : null}
-      </div>
+      </div>*/}
 
       <div
         className={`${chatStyle["chat-input-action"]} clickable`}
@@ -381,14 +381,14 @@ export function ChatActions(props: {
         <PromptIcon />
       </div>
 
-      <div
+      {/* <div
         className={`${chatStyle["chat-input-action"]} clickable`}
         onClick={() => {
           navigate(Path.Masks);
         }}
       >
         <MaskIcon />
-      </div>
+      </div>*/}
     </div>
   );
 }
@@ -660,7 +660,7 @@ export function Chat() {
               onClick={() => navigate(Path.Home)}
             />
           </div>
-          <div className="window-action-button">
+          {/*    <div className="window-action-button">
             <IconButton
               icon={<RenameIcon />}
               bordered
@@ -679,7 +679,7 @@ export function Chat() {
                 );
               }}
             />
-          </div>
+          </div>*/}
           {!isMobileScreen && (
             <div className="window-action-button">
               <IconButton
