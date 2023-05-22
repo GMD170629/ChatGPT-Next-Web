@@ -10,7 +10,7 @@ const cn = {
     ChatItemCount: (count: number) => `${count} 条对话`,
   },
   Chat: {
-    SubTitle: (count: number) => `与 ChatGPT 的 ${count} 条对话`,
+    SubTitle: (count: number) => `与 AI 的 ${count} 条对话`,
     Actions: {
       ChatList: "查看消息列表",
       CompressedHistory: "查看压缩后的历史 Prompt",
@@ -85,7 +85,7 @@ const cn = {
         ko: "한국어",
       },
     },
-    Avatar: "头像",
+    Avatar: "账号",
     FontSize: {
       Title: "字体大小",
       SubTitle: "聊天内容的字体大小",
@@ -198,7 +198,7 @@ const cn = {
   Mask: {
     Name: "面具",
     Page: {
-      Title: "预设角色面具",
+      Title: "常用功能",
       SubTitle: (count: number) => `${count} 个预设角色定义`,
       Search: "搜索角色面具",
       Create: "新建",

@@ -1,0 +1,109 @@
+@import "../styles/animation.scss";
+.container {
+  background: #F5F5F7;
+  height: 100vh;
+  .answer_content{
+    height: calc(100% - 90px);
+    padding: 20px;
+    margin: 0 20px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 20px;
+
+    .exam_login_box{
+      display: flex;
+      justify-content: space-between;
+      margin: 144px 15% 0 20%;
+      .login_img{
+        img{
+          height: 368px;
+        }
+      }
+      .login_box{
+        width: 400px;
+        background: #FFFFFF;
+        box-shadow: 0px 20px 100px 0px rgba(50, 50, 51, 0.06);
+        border-radius: 12px;
+        border: 1px solid #EDEEF2;
+        padding: 40px 30px;
+
+        .right_login_btn{
+          font-size: 18px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #C8C9CC;
+          margin-left: 20px;
+        }
+        h5{
+          height: 24px;
+          font-size: 18px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #323233;
+          line-height: 24px;
+          margin-bottom: 20px;
+        }
+        .loading_icon{
+          margin: 50px auto;
+        }
+        .invite-text {
+          width: 100%;
+          text-align: center;
+          img{
+            width: 85%;
+          }
+        }
+      }
+
+    }
+
+  }
+
+}
+@media screen and (max-width: 900px) {
+  .container .answer_content {
+    height: calc(100% - 65px);
+    padding: 15px;
+    margin: 0 15px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 10px;
+  }
+  .container .answer_content .exam_login_box{
+    margin: 0;
+    flex-wrap: wrap;
+    position: relative;
+    align-items: center;
+    height: 100%;
+  }
+  .container .answer_content .exam_login_box .login_img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+  }
+  .container .answer_content .exam_login_box .login_img img{
+    height: auto;
+    width: 50%;
+  }
+  .container .answer_content .exam_login_box .login_box {
+    width: 100%;
+    padding: 20px 20px;
+    z-index: 10;
+  }
+
+  .container .answer_content .exam_login_box .login_box h5{
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .container .answer_content .exam_login_box .login_box .right_login_btn{
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  .container .answer_content .exam_login_box .login_box  .ant-form-vertical .ant-form-item {
+    margin-bottom: 10px;
+  }
+  .container .answer_content .exam_login_box .login_box .forgetPassword {
+    top: -14px;
+  }
+}

@@ -345,12 +345,13 @@ export function Settings() {
                 className={styles.avatar}
                 onClick={() => setShowEmojiPicker(true)}
               >
+                加上昵称
                 <Avatar avatar={config.avatar} />
               </div>
             </Popover>
           </ListItem>
 
-          <ListItem
+          {/*   <ListItem
             title={Locale.Settings.Update.Version(currentVersion ?? "unknown")}
             subTitle={
               checkingUpdate
@@ -373,7 +374,7 @@ export function Settings() {
                 onClick={() => checkUpdate(true)}
               />
             )}
-          </ListItem>
+          </ListItem>*/}
 
           <ListItem title={Locale.Settings.SendKey}>
             <Select
@@ -460,7 +461,7 @@ export function Settings() {
             ></input>
           </ListItem>
 
-          <ListItem
+          {/*  <ListItem
             title={Locale.Settings.Mask.Title}
             subTitle={Locale.Settings.Mask.SubTitle}
           >
@@ -475,10 +476,10 @@ export function Settings() {
                 )
               }
             ></input>
-          </ListItem>
+          </ListItem>*/}
         </List>
 
-        <List>
+        {/*  <List>
           {enabledAccessControl ? (
             <ListItem
               title={Locale.Settings.AccessCode.Title}
@@ -536,9 +537,9 @@ export function Settings() {
               />
             )}
           </ListItem>
-        </List>
+        </List>*/}
 
-        <List>
+        {/* <List>
           <ListItem
             title={Locale.Settings.Prompt.Disable.Title}
             subTitle={Locale.Settings.Prompt.Disable.SubTitle}
@@ -568,7 +569,7 @@ export function Settings() {
               onClick={() => setShowPromptModal(true)}
             />
           </ListItem>
-        </List>
+        </List>*/}
 
         <List>
           <ModelConfigList

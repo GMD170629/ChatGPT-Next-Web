@@ -48,7 +48,7 @@ export function ModelConfigList(props: {
           }}
         ></InputRange>
       </ListItem>
-      <ListItem
+      {/*  <ListItem
         title={Locale.Settings.MaxTokens.Title}
         subTitle={Locale.Settings.MaxTokens.SubTitle}
       >
@@ -66,7 +66,7 @@ export function ModelConfigList(props: {
             )
           }
         ></input>
-      </ListItem>
+      </ListItem>*/}
       <ListItem
         title={Locale.Settings.PresencePenalty.Title}
         subTitle={Locale.Settings.PresencePenalty.SubTitle}
@@ -88,7 +88,7 @@ export function ModelConfigList(props: {
         ></InputRange>
       </ListItem>
 
-      <ListItem
+      {/*  <ListItem
         title={Locale.Settings.HistoryCount.Title}
         subTitle={Locale.Settings.HistoryCount.SubTitle}
       >
@@ -134,7 +134,7 @@ export function ModelConfigList(props: {
             )
           }
         ></input>
-      </ListItem>
+      </ListItem>*/}
     </>
   );
 }
