@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Home } from "./components/home";
 
 import { getServerSideConfig } from "./config/server";
+import { getToken } from "@/app/utils/token";
 
 const serverConfig = getServerSideConfig();
 

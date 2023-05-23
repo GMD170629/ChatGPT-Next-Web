@@ -1,9 +1,9 @@
 "use client";
+import { getToken, getUser } from "@/app/utils/token";
 
 require("../polyfill");
 
 import { useState, useEffect } from "react";
-
 import styles from "./home.module.scss";
 
 import BotIcon from "../icons/bot.svg";
@@ -20,6 +20,7 @@ import {
   Routes,
   Route,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import { SideBar } from "./sidebar";
 import { useAppConfig } from "../store/config";
@@ -55,7 +56,6 @@ const MaskPage = dynamic(async () => (await import("./mask")).MaskPage, {
 
 export function useSwitchTheme() {
   const config = useAppConfig();
-
   useEffect(() => {
     document.body.classList.remove("light");
     document.body.classList.remove("dark");
@@ -108,9 +108,9 @@ function Screen() {
   const isHome = location.pathname === Path.Home;
   const isMobileScreen = useMobileScreen();
 
-  useEffect(() => {
+  /*  useEffect(() => {
     loadAsyncGoogleFont();
-  }, []);
+  }, []);*/
 
   return (
     <div
@@ -141,7 +141,6 @@ function Screen() {
 
 export function Home() {
   useSwitchTheme();
-
   if (!useHasHydrated()) {
     return <Loading />;
   }

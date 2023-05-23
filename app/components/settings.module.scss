@@ -5,6 +5,16 @@
 
 .avatar {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.real_name{
+  margin-right: 5px;
+}
+.avatar_url{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 .edit-prompt-modal {

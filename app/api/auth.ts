@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { getServerSideConfig } from "../config/server";
 import md5 from "spark-md5";
 import { ACCESS_CODE_PREFIX } from "../constant";
+import { getToken } from "@/app/utils/token";
 
 function getIP(req: NextRequest) {
   let ip = req.ip ?? req.headers.get("x-real-ip");
@@ -56,13 +57,20 @@ export function auth(req: NextRequest) {
       console.log("[Auth] admin did not provide an api key");
       return {
         error: true,
-        msg: "admin did not provide an api key",
+        msg: "请先登录",
       };
     }
   } else {
     console.log("[Auth] use user api key");
   }
 
+  /*  let token = getToken();
+  if (!token) {
+    return {
+      error: true,
+      msg: "admin did not provide an api key",
+    };
+  }*/
   return {
     error: false,
   };

@@ -1,52 +1,56 @@
 import { useEffect, useState } from "react";
-// import {
-//     HashRouter as Router,
-//     Routes,
-//     Route,
-//     useLocation,
-//   } from "react-router-dom";
-import { getLoginCode } from "../api/login";
+import { getLoginCode } from "@/app/api/login";
+import styles from "./login.module.scss";
+import { useNavigate } from "react-router-dom";
+import { Path } from "@/app/constant";
+import { login, getUserInfoFormApi } from "@/app/utils/login";
+import { getToken, getUser } from "@/app/utils/token";
+import { useAccessStore } from "@/app/store";
 
-const Login = () => {
-  // const router = Route;
+export default function LoginPage() {
+  const accessStore = useAccessStore();
+  let token = "";
+  let interval = setInterval(() => {
+    if (token !== "") {
+      login(token).then(() => {
+        let BearerToken = getToken();
+        alert(BearerToken);
+        accessStore.updateToken(BearerToken);
+        clearInterval(interval);
+        getUserInfoFormApi().then(() => {
+          window.open("/", "_self");
+        });
+      });
+    }
+  }, 2000);
+
   const [loginCode, setLoginCode] = useState("");
-
-  // useEffect(() => {
-  //     // Check if user is already logged in
-  //     // If yes, redirect to /chat
-  //     const isLoggedIn = false; // Replace with actual check for logged in user
-  //     if (isLoggedIn) {
-  //         Router.push("/chat");
-  //     }
-  // }, []);
-
+  // Fetch login code from API
   useEffect(() => {
-    // Fetch login code from API
     const fetchLoginCode = async () => {
       const data = await getLoginCode();
       setLoginCode(data.ticket);
+      token = data.token;
+      console.log(data.token);
     };
     fetchLoginCode();
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div className={styles["login_box"]}>
       {loginCode ? (
-        <img
-          src={`https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${loginCode}`}
-          alt="Login QR Code"
-        />
+        <div className={styles["title_box"]}>
+          <h5>微信扫码登录</h5>
+          <div className={styles["img_box"]}>
+            <img
+              src={`https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${loginCode}`}
+              alt="Login QR Code"
+            />
+          </div>
+        </div>
       ) : (
-        "Loading..."
+        <div className={styles["loading"]}>Loading...</div>
       )}
     </div>
   );
-};
-export default Login;
+}

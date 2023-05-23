@@ -3,6 +3,9 @@ import "./styles/globals.scss";
 import "./styles/markdown.scss";
 import "./styles/highlight.scss";
 import { getBuildConfig } from "./config/build";
+import { getToken, getUser } from "@/app/utils/token";
+import { Path } from "@/app/constant";
+import { Home } from "@/app/components/home";
 
 const buildConfig = getBuildConfig();
 
@@ -29,6 +32,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  /*  let token = getToken();
+  console.log(token);
+  if(!token){
+    window.open("#"+Path.Login,"_self")
+  }*/
+
   return (
     <html lang="en">
       <head>

@@ -7,6 +7,7 @@ import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
 import CopyIcon from "../icons/copy.svg";
 import ClearIcon from "../icons/clear.svg";
+import LogoutIcon from "../icons/logout.svg";
 import LoadingIcon from "../icons/three-dots.svg";
 import EditIcon from "../icons/edit.svg";
 import EyeIcon from "../icons/eye.svg";
@@ -40,6 +41,8 @@ import { ErrorBoundary } from "./error";
 import { InputRange } from "./input-range";
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarPicker } from "./emoji";
+import { getUser } from "@/app/utils/token";
+import { resetToken } from "@/app/utils/login";
 
 function EditPromptModal(props: { id: number; onClose: () => void }) {
   const promptStore = usePromptStore();
@@ -219,6 +222,17 @@ export function Settings() {
   const remoteId = formatVersionDate(updateStore.remoteVersion);
   const hasNewVersion = currentVersion !== remoteId;
 
+  const userInfo = getUser();
+
+  const logout = () => {
+    resetToken()
+      .then(() => {
+        accessStore.updateToken("");
+        navigate("/");
+      })
+      .catch((error) => {});
+  };
+
   function checkUpdate(force = false) {
     setCheckingUpdate(true);
     updateStore.getLatestVersion(force).then(() => {
@@ -294,6 +308,19 @@ export function Settings() {
         <div className="window-actions">
           <div className="window-action-button">
             <IconButton
+              icon={<LogoutIcon />}
+              onClick={() => {
+                if (confirm(Locale.Settings.Actions.ConfirmLogoutAll)) {
+                  logout();
+                }
+              }}
+              bordered
+              title={Locale.Settings.Actions.Logout}
+            />
+          </div>
+
+          {/* <div className="window-action-button">
+            <IconButton
               icon={<ClearIcon />}
               onClick={() => {
                 if (confirm(Locale.Settings.Actions.ConfirmClearAll)) {
@@ -303,7 +330,7 @@ export function Settings() {
               bordered
               title={Locale.Settings.Actions.ClearAll}
             />
-          </div>
+          </div>*/}
           <div className="window-action-button">
             <IconButton
               icon={<ResetIcon />}
@@ -345,8 +372,12 @@ export function Settings() {
                 className={styles.avatar}
                 onClick={() => setShowEmojiPicker(true)}
               >
-                加上昵称
-                <Avatar avatar={config.avatar} />
+                <span className={styles.real_name}>{userInfo.real_name}</span>
+                <img
+                  src={userInfo.avatar_url}
+                  alt={""}
+                  className={styles.avatar_url}
+                />
               </div>
             </Popover>
           </ListItem>

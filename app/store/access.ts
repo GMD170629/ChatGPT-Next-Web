@@ -4,6 +4,7 @@ import { StoreKey } from "../constant";
 import { getHeaders } from "../client/api";
 import { BOT_HELLO } from "./chat";
 import { ALL_MODELS } from "./config";
+import { getToken } from "@/app/utils/token";
 
 export interface AccessControlStore {
   accessCode: string;
@@ -44,11 +45,9 @@ export const useAccessStore = create<AccessControlStore>()(
       },
       isAuthorized() {
         get().fetch();
-
+        console.log(get().token);
         // has token or has code or disabled access control
-        return (
-          !!get().token || !!get().accessCode || !get().enabledAccessControl()
-        );
+        return get().token != "";
       },
       fetch() {
         if (fetchState > 0) return;
