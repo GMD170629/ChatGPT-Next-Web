@@ -69,15 +69,13 @@ function pushChatMsg(id: number, messageData: any) {
     console.log(res);
   });
 }
-async function createEmptySession() {
-  let id = 0;
-  await createChat().then((res) => {
-    if (res.code == 0) {
-      id = res.data.id;
-    }
-  });
+
+function createEmptySession(): ChatSession {
+  const res = createChat();
+
+  //获取sessions
   return {
-    id: id,
+    id: res.data.id,
     topic: DEFAULT_TOPIC,
     memoryPrompt: "",
     messages: [],
@@ -126,13 +124,13 @@ function countMessages(msgs: ChatMessage[]) {
 export const useChatStore = create<ChatStore>()(
   persist(
     (set, get) => ({
-      sessions: [createEmptySession() as unknown as ChatSession],
+      sessions: [],
       currentSessionIndex: 0,
       globalId: 0,
 
-      clearSessions() {
+      clearSessions: () => {
         set(() => ({
-          sessions: [createEmptySession() as unknown as ChatSession],
+          sessions: [createEmptySession()],
           currentSessionIndex: 0,
         }));
       },
@@ -168,8 +166,8 @@ export const useChatStore = create<ChatStore>()(
         });
       },
 
-      async newSession(mask) {
-        const session = await createEmptySession();
+      newSession(mask) {
+        const session = createEmptySession();
 
         /*    set(() => ({ globalId: get().globalId + 1 }));
         session.id = get().globalId;*/
@@ -202,7 +200,7 @@ export const useChatStore = create<ChatStore>()(
 
         if (deletingLastSession) {
           nextIndex = 0;
-          sessions.push(createEmptySession() as unknown as ChatSession);
+          sessions.push(createEmptySession());
         }
 
         // for undo delete action
@@ -540,7 +538,7 @@ export const useChatStore = create<ChatStore>()(
     {
       name: StoreKey.Chat,
       version: 2,
-      migrate(persistedState, version) {
+      async migrate(persistedState, version) {
         const state = persistedState as any;
         const newState = JSON.parse(JSON.stringify(state)) as ChatStore;
 
@@ -550,7 +548,7 @@ export const useChatStore = create<ChatStore>()(
 
           const oldSessions = state.sessions;
           for (const oldSession of oldSessions) {
-            const newSession = createEmptySession() as unknown as ChatSession;
+            const newSession = createEmptySession();
             newSession.topic = oldSession.topic;
             newSession.messages = [...oldSession.messages];
             newSession.mask.modelConfig.sendMemory = true;

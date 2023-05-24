@@ -1,15 +1,15 @@
 import { getBearToken } from "@/app/utils/token";
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
-export const createChat = async () => {
+export const createChat = () => {
   let token = getBearToken();
   myHeaders.append("Authorization", token);
-  const response = await fetch("https://apitest.qingline.net/api/chat/create", {
-    method: "POST",
-    headers: myHeaders,
-  });
-  const res = await response.json();
-  return res;
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "https://apitest.qingline.net/api/chat/create", false);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("Authorization", token);
+  xhr.send();
+  return JSON.parse(xhr.responseText);
 };
 /*pushChatMessage data{
     "content": "",
