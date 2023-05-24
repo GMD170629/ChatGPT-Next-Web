@@ -289,19 +289,11 @@ export const useChatStore = create<ChatStore>()(
             content: userMessage.content,
             role: userMessage.role,
           };
-          let botData: msgData = {
-            content: botMessage.content,
-            role: botMessage.role,
-            model: botMessage.model,
-          };
-          console.log(session);
+
           pushChatMsg(<number>session.id, userData);
-          pushChatMsg(<number>session.id, botData);
+
           session.messages.push(userMessage);
           session.messages.push(botMessage);
-
-          console.log(userMessage);
-          console.log(botMessage);
         });
 
         // make request
@@ -322,6 +314,12 @@ export const useChatStore = create<ChatStore>()(
               sessionIndex,
               botMessage.id ?? messageIndex,
             );
+            let botData: msgData = {
+              content: botMessage.content,
+              role: botMessage.role,
+              model: botMessage.model,
+            };
+            pushChatMsg(<number>session.id, botData);
             set(() => ({}));
           },
           onError(error) {
