@@ -71,8 +71,8 @@ function pushChatMsg(id: number, messageData: any) {
 }
 
 function createEmptySession(): ChatSession {
+  // console.log(12345);
   const res = createChat();
-
   //获取sessions
   return {
     id: res.data.id,
@@ -124,7 +124,7 @@ function countMessages(msgs: ChatMessage[]) {
 export const useChatStore = create<ChatStore>()(
   persist(
     (set, get) => ({
-      sessions: [],
+      sessions: [createEmptySession()],
       currentSessionIndex: 0,
       globalId: 0,
 
