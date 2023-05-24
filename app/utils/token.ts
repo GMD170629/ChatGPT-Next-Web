@@ -15,7 +15,9 @@ export function setToken(token: string) {
 export function getToken() {
   return Cookies.get(tokenKey);
 }
-
+export function getBearToken() {
+  return "Bearer " + Cookies.get(tokenKey);
+}
 export function removeToken() {
   let domain = document.domain;
   let flag = domain.indexOf(".qingline.net") != -1;

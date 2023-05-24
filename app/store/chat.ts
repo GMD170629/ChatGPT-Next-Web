@@ -11,6 +11,7 @@ import { REQUEST_TIMEOUT_MS, StoreKey } from "../constant";
 import { api, RequestMessage } from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
+import { createChat, pushChatMessage } from "@/app/api/chat";
 
 export type ChatMessage = RequestMessage & {
   date: string;
@@ -29,7 +30,6 @@ export function createMessage(override: Partial<ChatMessage>): ChatMessage {
     ...override,
   };
 }
-
 export interface ChatStat {
   tokenCount: number;
   wordCount: number;
@@ -56,9 +56,28 @@ export const BOT_HELLO: ChatMessage = createMessage({
   content: Locale.Store.BotHello,
 });
 
-function createEmptySession(): ChatSession {
+// @ts-ignore
+
+export interface msgData {
+  content: string;
+  role: string;
+  model?: string;
+}
+
+function pushChatMsg(id: number, messageData: any) {
+  pushChatMessage(id, messageData).then((res) => {
+    console.log(res);
+  });
+}
+async function createEmptySession(): ChatSession {
+  let id = 0;
+  await createChat().then((res) => {
+    if (res.code == 0) {
+      id = res.data.id;
+    }
+  });
   return {
-    id: Date.now() + Math.random(),
+    id: id,
     topic: DEFAULT_TOPIC,
     memoryPrompt: "",
     messages: [],
@@ -149,11 +168,11 @@ export const useChatStore = create<ChatStore>()(
         });
       },
 
-      newSession(mask) {
-        const session = createEmptySession();
+      async newSession(mask) {
+        const session = await createEmptySession();
 
-        set(() => ({ globalId: get().globalId + 1 }));
-        session.id = get().globalId;
+        /*    set(() => ({ globalId: get().globalId + 1 }));
+        session.id = get().globalId;*/
 
         if (mask) {
           session.mask = { ...mask };
@@ -239,7 +258,7 @@ export const useChatStore = create<ChatStore>()(
           role: "user",
           content,
         });
-
+        console.log(userMessage);
         const botMessage: ChatMessage = createMessage({
           role: "assistant",
           streaming: true,
@@ -266,8 +285,23 @@ export const useChatStore = create<ChatStore>()(
 
         // save user's and bot's message
         get().updateCurrentSession((session) => {
+          let userData: msgData = {
+            content: userMessage.content,
+            role: userMessage.role,
+          };
+          let botData: msgData = {
+            content: botMessage.content,
+            role: botMessage.role,
+            model: botMessage.model,
+          };
+          console.log(session);
+          pushChatMsg(<number>session.id, userData);
+          pushChatMsg(<number>session.id, botData);
           session.messages.push(userMessage);
           session.messages.push(botMessage);
+
+          console.log(userMessage);
+          console.log(botMessage);
         });
 
         // make request

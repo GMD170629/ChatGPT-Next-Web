@@ -4,6 +4,7 @@ const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
     Unauthorized: "暂未登录，请前往[登录](/#/login)页扫码登录，开始使用。",
+    UnVip: "暂无权限，请前往[购买](/#/login)页购买产品，开始使用。",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} 条对话`,

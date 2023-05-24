@@ -1,5 +1,6 @@
 "use client";
-import { getToken, getUser } from "@/app/utils/token";
+
+import { getUser } from "@/app/utils/token";
 
 require("../polyfill");
 
@@ -111,7 +112,8 @@ function Screen() {
   /*  useEffect(() => {
     loadAsyncGoogleFont();
   }, []);*/
-
+  let user = getUser();
+  console.log(user);
   return (
     <div
       className={

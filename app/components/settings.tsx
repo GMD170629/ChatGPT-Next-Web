@@ -372,9 +372,11 @@ export function Settings() {
                 className={styles.avatar}
                 onClick={() => setShowEmojiPicker(true)}
               >
-                <span className={styles.real_name}>{userInfo.real_name}</span>
+                <span className={styles.real_name}>
+                  {userInfo ? userInfo.real_name : ""}
+                </span>
                 <img
-                  src={userInfo.avatar_url}
+                  src={userInfo ? userInfo.avatar_url : ""}
                   alt={""}
                   className={styles.avatar_url}
                 />

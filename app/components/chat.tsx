@@ -584,6 +584,9 @@ export function Chat() {
     if (!accessStore.isAuthorized()) {
       copiedHello.content = Locale.Error.Unauthorized;
     }
+    /*  if (!accessStore.isVip()) {
+      copiedHello.content = Locale.Error.UnVip;
+    }*/
     context.push(copiedHello);
   }
 

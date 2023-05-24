@@ -8,9 +8,9 @@ const BASE_URL = process.env.BASE_URL ?? OPENAI_URL;
 export async function requestOpenai(req: NextRequest) {
   const controller = new AbortController();
   const authValue = req.headers.get("Authorization") ?? "";
-  const openaiPath = `${req.nextUrl.pathname}${req.nextUrl.search}`.replaceAll(
-    "/api/openai/",
-    "",
+  const openaiPath = `${req.nextUrl.pathname}`.replaceAll(
+    "/api/openai/v1/",
+    "api/",
   );
 
   let baseUrl = BASE_URL;
@@ -45,8 +45,8 @@ export async function requestOpenai(req: NextRequest) {
       signal: controller.signal,
     });
   } catch (err: unknown) {
-    if (err instanceof Error && err.name === 'AbortError') {
-      console.log('Fetch aborted');
+    if (err instanceof Error && err.name === "AbortError") {
+      console.log("Fetch aborted");
     } else {
       throw err;
     }

@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { getLoginCode } from "@/app/api/login";
 import styles from "./login.module.scss";
-import { useNavigate } from "react-router-dom";
-import { Path } from "@/app/constant";
 import { login, getUserInfoFormApi } from "@/app/utils/login";
-import { getToken, getUser } from "@/app/utils/token";
+import { getToken } from "@/app/utils/token";
 import { useAccessStore } from "@/app/store";
 
 export default function LoginPage() {
@@ -13,9 +11,8 @@ export default function LoginPage() {
   let interval = setInterval(() => {
     if (token !== "") {
       login(token).then(() => {
-        let BearerToken = getToken();
-        alert(BearerToken);
-        accessStore.updateToken(BearerToken);
+        let newToken = getToken();
+        accessStore.updateToken(newToken);
         clearInterval(interval);
         getUserInfoFormApi().then(() => {
           window.open("/", "_self");

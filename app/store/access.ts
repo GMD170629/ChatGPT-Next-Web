@@ -4,7 +4,7 @@ import { StoreKey } from "../constant";
 import { getHeaders } from "../client/api";
 import { BOT_HELLO } from "./chat";
 import { ALL_MODELS } from "./config";
-import { getToken } from "@/app/utils/token";
+import { getUser } from "@/app/utils/token";
 
 export interface AccessControlStore {
   accessCode: string;
@@ -18,6 +18,7 @@ export interface AccessControlStore {
   updateCode: (_: string) => void;
   enabledAccessControl: () => boolean;
   isAuthorized: () => boolean;
+  isVip: () => boolean;
   fetch: () => void;
 }
 
@@ -43,9 +44,13 @@ export const useAccessStore = create<AccessControlStore>()(
       updateToken(token: string) {
         set(() => ({ token }));
       },
+      isVip() {
+        /*判断是否购买产品，但是现在是后台直接判断的权限，暂时没有使用*/
+        let user = getUser();
+        return user.isVip == 1;
+      },
       isAuthorized() {
         get().fetch();
-        console.log(get().token);
         // has token or has code or disabled access control
         return get().token != "";
       },

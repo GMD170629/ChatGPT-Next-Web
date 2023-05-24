@@ -13,8 +13,7 @@ export function login(token: string) {
         console.log(res);
         const { code, data } = res;
         if (code == 0) {
-          const BearerToken = "Bearer " + data.accessToken;
-          setToken(BearerToken);
+          setToken(data.accessToken);
           resolve(res);
         }
       })
