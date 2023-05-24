@@ -5,6 +5,8 @@ myHeaders.append("Content-Type", "application/json");
 export const createChat = () => {
   let token = getBearToken();
 
+  var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
   const xhr = new XMLHttpRequest();
   xhr.open("POST", "https://apitest.qingline.net/api/chat/create", false);
   xhr.setRequestHeader("Content-Type", "application/json");
