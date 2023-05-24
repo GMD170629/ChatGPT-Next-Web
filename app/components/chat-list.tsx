@@ -101,6 +101,7 @@ export function ChatList(props: { narrow?: boolean }) {
     ],
   );
   const chatStore = useChatStore();
+  chatStore.init();
   const navigate = useNavigate();
 
   const onDragEnd: OnDragEndResponder = (result) => {

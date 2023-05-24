@@ -70,31 +70,35 @@ function pushChatMsg(id: number, messageData: any) {
   });
 }
 
-function createEmptySession(): ChatSession {
-  // console.log(12345);
-  const res = createChat();
-  //获取sessions
-  return {
-    id: res.data.id,
-    topic: DEFAULT_TOPIC,
-    memoryPrompt: "",
-    messages: [],
-    stat: {
-      tokenCount: 0,
-      wordCount: 0,
-      charCount: 0,
-    },
-    lastUpdate: Date.now(),
-    lastSummarizeIndex: 0,
-    mask: createEmptyMask(),
-  };
+function createEmptySession(): Promise<ChatSession> {
+  return new Promise(async (resolve, reject) => {
+    let res = await createChat();
+
+    //获取sessions
+    return resolve({
+      id: res.data.id,
+      topic: DEFAULT_TOPIC,
+      memoryPrompt: "",
+      messages: [],
+      stat: {
+        tokenCount: 0,
+        wordCount: 0,
+        charCount: 0,
+      },
+      lastUpdate: Date.now(),
+      lastSummarizeIndex: 0,
+      mask: createEmptyMask(),
+    });
+  });
 }
 
 interface ChatStore {
   sessions: ChatSession[];
   currentSessionIndex: number;
   globalId: number;
+  inited: boolean;
   clearSessions: () => void;
+  init: () => void;
   moveSession: (from: number, to: number) => void;
   selectSession: (index: number) => void;
   newSession: (mask?: Mask) => void;
@@ -124,15 +128,45 @@ function countMessages(msgs: ChatMessage[]) {
 export const useChatStore = create<ChatStore>()(
   persist(
     (set, get) => ({
-      sessions: [createEmptySession()],
+      sessions: [
+        {
+          id: Date.now(),
+          topic: DEFAULT_TOPIC,
+          memoryPrompt: "",
+          messages: [],
+          stat: {
+            tokenCount: 0,
+            wordCount: 0,
+            charCount: 0,
+          },
+          lastUpdate: Date.now(),
+          lastSummarizeIndex: 0,
+          mask: createEmptyMask(),
+        },
+      ],
       currentSessionIndex: 0,
       globalId: 0,
+      inited: false,
+      // Add an init function to be called when the store is created
+      init: () => {
+        console.log("init", get().sessions[0].id > 10000000 && !get().inited);
+        if (get().sessions[0].id > 10000000 && !get().inited) {
+          set(() => ({
+            inited: true,
+          }));
+
+          get().clearSessions();
+        }
+        // Add your initialization code here
+      },
 
       clearSessions: () => {
-        set(() => ({
-          sessions: [createEmptySession()],
-          currentSessionIndex: 0,
-        }));
+        createEmptySession().then((session) => {
+          set(() => ({
+            sessions: [session],
+            currentSessionIndex: 0,
+          }));
+        });
       },
 
       selectSession(index: number) {
@@ -167,20 +201,20 @@ export const useChatStore = create<ChatStore>()(
       },
 
       newSession(mask) {
-        const session = createEmptySession();
+        createEmptySession().then((session) => {
+          /*    set(() => ({ globalId: get().globalId + 1 }));
+          session.id = get().globalId;*/
 
-        /*    set(() => ({ globalId: get().globalId + 1 }));
-        session.id = get().globalId;*/
-
-        if (mask) {
-          session.mask = { ...mask };
-          session.topic = mask.name;
-        }
-        set((state) => ({
-          currentSessionIndex: 0,
-          // @ts-ignore
-          sessions: [session].concat(state.sessions),
-        }));
+          if (mask) {
+            session.mask = { ...mask };
+            session.topic = mask.name;
+          }
+          set((state) => ({
+            currentSessionIndex: 0,
+            // @ts-ignore
+            sessions: [session].concat(state.sessions),
+          }));
+        });
       },
 
       deleteSession(index) {
@@ -200,30 +234,32 @@ export const useChatStore = create<ChatStore>()(
 
         if (deletingLastSession) {
           nextIndex = 0;
-          sessions.push(createEmptySession());
+          createEmptySession().then((session) => {
+            sessions.push(session);
+
+            // for undo delete action
+            const restoreState = {
+              currentSessionIndex: get().currentSessionIndex,
+              sessions: get().sessions.slice(),
+            };
+
+            set(() => ({
+              currentSessionIndex: nextIndex,
+              sessions,
+            }));
+
+            showToast(
+              Locale.Home.DeleteToast,
+              {
+                text: Locale.Home.Revert,
+                onClick() {
+                  set(() => restoreState);
+                },
+              },
+              5000,
+            );
+          });
         }
-
-        // for undo delete action
-        const restoreState = {
-          currentSessionIndex: get().currentSessionIndex,
-          sessions: get().sessions.slice(),
-        };
-
-        set(() => ({
-          currentSessionIndex: nextIndex,
-          sessions,
-        }));
-
-        showToast(
-          Locale.Home.DeleteToast,
-          {
-            text: Locale.Home.Revert,
-            onClick() {
-              set(() => restoreState);
-            },
-          },
-          5000,
-        );
       },
 
       currentSession() {
@@ -548,13 +584,14 @@ export const useChatStore = create<ChatStore>()(
 
           const oldSessions = state.sessions;
           for (const oldSession of oldSessions) {
-            const newSession = createEmptySession();
-            newSession.topic = oldSession.topic;
-            newSession.messages = [...oldSession.messages];
-            newSession.mask.modelConfig.sendMemory = true;
-            newSession.mask.modelConfig.historyMessageCount = 4;
-            newSession.mask.modelConfig.compressMessageLengthThreshold = 1000;
-            newState.sessions.push(newSession);
+            createEmptySession().then((newSession) => {
+              newSession.topic = oldSession.topic;
+              newSession.messages = [...oldSession.messages];
+              newSession.mask.modelConfig.sendMemory = true;
+              newSession.mask.modelConfig.historyMessageCount = 4;
+              newSession.mask.modelConfig.compressMessageLengthThreshold = 1000;
+              newState.sessions.push(newSession);
+            });
           }
         }
 
