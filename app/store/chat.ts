@@ -538,7 +538,7 @@ export const useChatStore = create<ChatStore>()(
     {
       name: StoreKey.Chat,
       version: 2,
-      async migrate(persistedState, version) {
+      migrate(persistedState, version) {
         const state = persistedState as any;
         const newState = JSON.parse(JSON.stringify(state)) as ChatStore;
 
