@@ -69,7 +69,7 @@ function pushChatMsg(id: number, messageData: any) {
     console.log(res);
   });
 }
-async function createEmptySession(): ChatSession {
+async function createEmptySession() {
   let id = 0;
   await createChat().then((res) => {
     if (res.code == 0) {
@@ -126,13 +126,13 @@ function countMessages(msgs: ChatMessage[]) {
 export const useChatStore = create<ChatStore>()(
   persist(
     (set, get) => ({
-      sessions: [createEmptySession()],
+      sessions: [createEmptySession() as unknown as ChatSession],
       currentSessionIndex: 0,
       globalId: 0,
 
       clearSessions() {
         set(() => ({
-          sessions: [createEmptySession()],
+          sessions: [createEmptySession() as unknown as ChatSession],
           currentSessionIndex: 0,
         }));
       },
@@ -178,9 +178,9 @@ export const useChatStore = create<ChatStore>()(
           session.mask = { ...mask };
           session.topic = mask.name;
         }
-
         set((state) => ({
           currentSessionIndex: 0,
+          // @ts-ignore
           sessions: [session].concat(state.sessions),
         }));
       },
@@ -202,7 +202,7 @@ export const useChatStore = create<ChatStore>()(
 
         if (deletingLastSession) {
           nextIndex = 0;
-          sessions.push(createEmptySession());
+          sessions.push(createEmptySession() as unknown as ChatSession);
         }
 
         // for undo delete action
@@ -550,7 +550,7 @@ export const useChatStore = create<ChatStore>()(
 
           const oldSessions = state.sessions;
           for (const oldSession of oldSessions) {
-            const newSession = createEmptySession();
+            const newSession = createEmptySession() as unknown as ChatSession;
             newSession.topic = oldSession.topic;
             newSession.messages = [...oldSession.messages];
             newSession.mask.modelConfig.sendMemory = true;
