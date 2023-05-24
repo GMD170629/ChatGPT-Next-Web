@@ -583,11 +583,12 @@ export function Chat() {
     const copiedHello = Object.assign({}, BOT_HELLO);
     if (!accessStore.isAuthorized()) {
       copiedHello.content = Locale.Error.Unauthorized;
+    } else {
+      context.push(copiedHello);
     }
     /*  if (!accessStore.isVip()) {
       copiedHello.content = Locale.Error.UnVip;
     }*/
-    context.push(copiedHello);
   }
 
   // preview messages
