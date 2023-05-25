@@ -5,9 +5,6 @@ module.exports = {
       interpreter_args: 'start',
       watch: '.',
       ignore_watch: ['node_modules', 'logs'],
-      env: {
-        NODE_ENV: 'production'
-      }
     }]
   }
   
