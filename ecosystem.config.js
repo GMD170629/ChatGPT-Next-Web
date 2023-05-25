@@ -1,11 +1,11 @@
 module.exports = {
     apps : [{
       name: 'gpt-qingline',
-      interpreter: 'yarn',
-      interpreter_args: 'start',
+      script    : 'yarn',
+      args      : 'start',
+      interpreter: '/bin/bash',
       watch: '.',
       ignore_watch: ['node_modules', 'logs'],
       cwd: '.'
     }]
   }
-  
