@@ -1,6 +1,6 @@
 module.exports = {
     apps : [{
-      name: 'next-app',
+      name: 'gpt-qingline-net',
       interpreter: 'yarn',
       interpreter_args: 'start',
       watch: '.',
