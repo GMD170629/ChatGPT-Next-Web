@@ -1,8 +1,8 @@
 module.exports = {
     apps : [{
-      name: 'gpt-qingline-net',
-      script: 'yarn',
-      args: 'start',
+      name: 'next-app',
+      interpreter: 'yarn',
+      interpreter_args: 'start',
       watch: '.',
       ignore_watch: ['node_modules', 'logs'],
       env: {
