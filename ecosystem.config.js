@@ -3,8 +3,12 @@ module.exports = {
       name: 'gpt-qingline-net',
       interpreter: 'yarn',
       interpreter_args: 'start',
-      watch: '/root/ChatGPT-Next-Web/',
-      ignore_watch: ['node_modules', 'logs']
+      watch: '.',
+      ignore_watch: ['node_modules', 'logs'],
+      env: {
+        // 指定.env文件的路径
+        PATH: '/root/ChatGPT-Next-Web/.env'
+      }
     }]
   }
   
