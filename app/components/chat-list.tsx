@@ -92,16 +92,24 @@ export function ChatItem(props: {
 }
 
 export function ChatList(props: { narrow?: boolean }) {
-  const [sessions, selectedIndex, selectSession, moveSession] = useChatStore(
-    (state) => [
-      state.sessions,
-      state.currentSessionIndex,
-      state.selectSession,
-      state.moveSession,
-    ],
-  );
-  const chatStore = useChatStore();
-  chatStore.init();
+  const [
+    sessions,
+    selectedIndex,
+    selectSession,
+    moveSession,
+    init,
+    deleteSession,
+  ] = useChatStore((state) => [
+    state.sessions,
+    state.currentSessionIndex,
+    state.selectSession,
+    state.moveSession,
+    state.init,
+    state.deleteSession,
+  ]);
+  /*  const chatStore = useChatStore();*/
+  /*  chatStore.init();*/
+  init();
   const navigate = useNavigate();
 
   const onDragEnd: OnDragEndResponder = (result) => {
@@ -144,7 +152,7 @@ export function ChatList(props: { narrow?: boolean }) {
                 }}
                 onDelete={() => {
                   if (!props.narrow || confirm(Locale.Home.DeleteChat)) {
-                    chatStore.deleteSession(i);
+                    deleteSession(i);
                   }
                 }}
                 narrow={props.narrow}

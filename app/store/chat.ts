@@ -66,7 +66,7 @@ export interface msgData {
 
 function pushChatMsg(id: number, messageData: any) {
   pushChatMessage(id, messageData).then((res) => {
-    console.log(res);
+    console.log(["push_message"], res);
   });
 }
 
@@ -149,12 +149,11 @@ export const useChatStore = create<ChatStore>()(
       inited: false,
       // Add an init function to be called when the store is created
       init: () => {
-        console.log("init", get().sessions[0].id > 10000000 && !get().inited);
+        /*   console.log("init", get().sessions[0].id > 10000000 && !get().inited);*/
         if (get().sessions[0].id > 10000000 && !get().inited) {
           set(() => ({
             inited: true,
           }));
-
           get().clearSessions();
         }
         // Add your initialization code here
@@ -220,12 +219,10 @@ export const useChatStore = create<ChatStore>()(
       deleteSession(index) {
         const deletingLastSession = get().sessions.length === 1;
         const deletedSession = get().sessions.at(index);
-
         if (!deletedSession) return;
 
         const sessions = get().sessions.slice();
         sessions.splice(index, 1);
-
         const currentIndex = get().currentSessionIndex;
         let nextIndex = Math.min(
           currentIndex - Number(index < currentIndex),
@@ -259,6 +256,28 @@ export const useChatStore = create<ChatStore>()(
               5000,
             );
           });
+        } else {
+          // for undo delete action
+          const restoreState = {
+            currentSessionIndex: get().currentSessionIndex,
+            sessions: get().sessions.slice(),
+          };
+
+          set(() => ({
+            currentSessionIndex: nextIndex,
+            sessions,
+          }));
+
+          showToast(
+            Locale.Home.DeleteToast,
+            {
+              text: Locale.Home.Revert,
+              onClick() {
+                set(() => restoreState);
+              },
+            },
+            5000,
+          );
         }
       },
 
@@ -292,7 +311,6 @@ export const useChatStore = create<ChatStore>()(
           role: "user",
           content,
         });
-        console.log(userMessage);
         const botMessage: ChatMessage = createMessage({
           role: "assistant",
           streaming: true,

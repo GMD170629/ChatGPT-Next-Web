@@ -4,6 +4,7 @@ import styles from "./login.module.scss";
 import { login, getUserInfoFormApi } from "@/app/utils/login";
 import { getToken } from "@/app/utils/token";
 import { useAccessStore } from "@/app/store";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const accessStore = useAccessStore();
@@ -28,7 +29,6 @@ export default function LoginPage() {
       const data = await getLoginCode();
       setLoginCode(data.ticket);
       token = data.token;
-      console.log(data.token);
     };
     fetchLoginCode();
   }, []);

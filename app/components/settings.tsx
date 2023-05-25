@@ -228,6 +228,7 @@ export function Settings() {
     resetToken()
       .then(() => {
         accessStore.updateToken("");
+        chatStore.clearSessions();
         navigate("/");
       })
       .catch((error) => {});

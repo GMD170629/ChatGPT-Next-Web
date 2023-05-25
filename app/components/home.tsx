@@ -112,8 +112,8 @@ function Screen() {
   /*  useEffect(() => {
     loadAsyncGoogleFont();
   }, []);*/
-  let user = getUser();
-  console.log(user);
+  /*  let user = getUser();
+  console.log(user);*/
   return (
     <div
       className={
