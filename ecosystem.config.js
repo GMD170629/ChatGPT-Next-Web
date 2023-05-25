@@ -4,11 +4,7 @@ module.exports = {
       interpreter: 'yarn',
       interpreter_args: 'start',
       watch: '.',
-      ignore_watch: ['node_modules', 'logs'],
-      env: {
-        // 指定.env文件的路径
-        PATH: '/root/ChatGPT-Next-Web/.env'
-      }
+      ignore_watch: ['node_modules', 'logs']
     }]
   }
   
