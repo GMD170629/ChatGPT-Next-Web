@@ -4,7 +4,8 @@ module.exports = {
       interpreter: 'yarn',
       interpreter_args: 'start',
       watch: '.',
-      ignore_watch: ['node_modules', 'logs']
+      ignore_watch: ['node_modules', 'logs'],
+      cwd: '.'
     }]
   }
   
