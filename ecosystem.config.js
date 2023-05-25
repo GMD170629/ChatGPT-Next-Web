@@ -3,9 +3,9 @@ module.exports = {
       name: 'gpt-qingline-net',
       interpreter: 'yarn',
       interpreter_args: 'start',
-      watch: '.',
+      watch: '/root/ChatGPT-Next-Web/',
       ignore_watch: ['node_modules', 'logs'],
-      cwd: '.'
+      cwd: '/root/ChatGPT-Next-Web/'
     }]
   }
   
