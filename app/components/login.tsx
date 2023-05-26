@@ -27,7 +27,7 @@ export default function LoginPage() {
   // Fetch login code from API
   useEffect(() => {
     if (isWeixin()) {
-      let redirect = "http://localhost:3000/wechat";
+      let redirect = "https://gpt.qingline.net/wechat";
       redirect = encodeURIComponent(redirect);
       let url = `https://api.qingline.net/api/wechat/login/web?redirect=${redirect}`;
       window.open(url, "_self");
