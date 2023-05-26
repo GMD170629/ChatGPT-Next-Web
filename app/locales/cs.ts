@@ -5,7 +5,7 @@ const cs: LocaleType = {
   WIP: "V přípravě...",
   Error: {
     Unauthorized:
-      "Neoprávněný přístup, zadejte přístupový kód na stránce nastavení.",
+      "Neoprávněný přístup, zadejte přístupový kód na stránce nastavení.[Login Now] (/#/login)",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} zpráv`,

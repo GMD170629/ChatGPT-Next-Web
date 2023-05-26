@@ -223,7 +223,7 @@ export function Settings() {
   const hasNewVersion = currentVersion !== remoteId;
 
   const userInfo = getUser();
-
+  console.log(userInfo);
   const logout = () => {
     resetToken()
       .then(() => {

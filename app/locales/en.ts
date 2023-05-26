@@ -74,7 +74,7 @@ const en: LocaleType = {
       Options: {
         cn: "简体中文",
         en: "English",
-        tw: "繁體中文",
+        /*tw: "繁體中文",
         fr: "Français",
         es: "Español",
         it: "Italiano",
@@ -84,7 +84,7 @@ const en: LocaleType = {
         vi: "Tiếng Việt",
         ru: "Русский",
         cs: "Čeština",
-        ko: "한국어",
+        ko: "한국어",*/
       },
     },
     Avatar: "Avatar",

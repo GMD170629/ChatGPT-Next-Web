@@ -18,7 +18,7 @@ export type { LocaleType } from "./cn";
 export const AllLangs = [
   "en",
   "cn",
-  "tw",
+  /*  "tw",
   "fr",
   "es",
   "it",
@@ -28,7 +28,7 @@ export const AllLangs = [
   "vi",
   "ru",
   "cs",
-  "ko",
+  "ko",*/
 ] as const;
 export type Lang = (typeof AllLangs)[number];
 
