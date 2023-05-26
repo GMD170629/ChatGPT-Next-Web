@@ -5,7 +5,7 @@ const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized:
-      "Unauthorized access, please enter access code in settings page.",
+      "Unauthorized access, please click [Login Now] (/#/login) to start using.",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
