@@ -82,7 +82,7 @@ export const CN_MASKS: BuiltinMask[] = [
     lang: "cn",
     builtin: true,
   },
-  {
+  /* {
     avatar: "1f69b",
     name: "后勤工作",
     context: [
@@ -104,7 +104,7 @@ export const CN_MASKS: BuiltinMask[] = [
     },
     lang: "cn",
     builtin: true,
-  },
+  },*/
   {
     avatar: "1f469-200d-1f4bc",
     name: "职业顾问",
@@ -174,7 +174,7 @@ export const CN_MASKS: BuiltinMask[] = [
     lang: "cn",
     builtin: true,
   },
-  {
+  /* {
     avatar: "1f4d5",
     name: "小红书写手",
     context: [
@@ -224,7 +224,7 @@ export const CN_MASKS: BuiltinMask[] = [
     },
     lang: "cn",
     builtin: true,
-  },
+  },*/
   {
     avatar: "1f469-200d-2695-fe0f",
     name: "心理医生",

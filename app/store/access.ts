@@ -42,7 +42,10 @@ export const useAccessStore = create<AccessControlStore>()(
         set(() => ({ accessCode: code }));
       },
       updateToken(token: string) {
-        set(() => ({ token }));
+        const currentToken = get().token;
+        if (token !== currentToken) {
+          set(() => ({ token }));
+        }
       },
       isVip() {
         /*判断是否购买产品，但是现在是后台直接判断的权限，暂时没有使用*/

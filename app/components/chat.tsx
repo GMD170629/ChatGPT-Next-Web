@@ -52,7 +52,12 @@ import styles from "./home.module.scss";
 import chatStyle from "./chat.module.scss";
 
 import { ListItem, Modal, showModal } from "./ui-lib";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { LAST_INPUT_KEY, Path, REQUEST_TIMEOUT_MS } from "../constant";
 import { Avatar } from "./emoji";
 import { MaskAvatar, MaskConfig } from "./mask";

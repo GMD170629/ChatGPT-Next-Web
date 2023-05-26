@@ -3,9 +3,10 @@ import { getLoginCode } from "@/app/api/login";
 import styles from "./login.module.scss";
 import { login, getUserInfoFormApi } from "@/app/utils/login";
 import { getToken } from "@/app/utils/token";
+import { isWeixin } from "@/app/utils/function";
 import { useAccessStore } from "@/app/store";
 import { useNavigate } from "react-router-dom";
-
+import { Path } from "../constant";
 export default function LoginPage() {
   const accessStore = useAccessStore();
   let token = "";
@@ -25,12 +26,19 @@ export default function LoginPage() {
   const [loginCode, setLoginCode] = useState("");
   // Fetch login code from API
   useEffect(() => {
-    const fetchLoginCode = async () => {
-      const data = await getLoginCode();
-      setLoginCode(data.ticket);
-      token = data.token;
-    };
-    fetchLoginCode();
+    if (isWeixin()) {
+      let redirect = "http://localhost:3000/wechat";
+      redirect = encodeURIComponent(redirect);
+      let url = `https://api.qingline.net/api/wechat/login/web?redirect=${redirect}`;
+      window.open(url, "_self");
+    } else {
+      const fetchLoginCode = async () => {
+        const data = await getLoginCode();
+        setLoginCode(data.ticket);
+        token = data.token;
+      };
+      fetchLoginCode();
+    }
   }, []);
 
   return (

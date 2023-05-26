@@ -34,7 +34,9 @@ export function Loading(props: { noLogo?: boolean }) {
     </div>
   );
 }
-
+const Wechat = dynamic(async () => (await import("./wechat")).Wechat, {
+  loading: () => <Loading noLogo />,
+});
 const Login = dynamic(async () => await import("./login"), {
   loading: () => <Loading noLogo />,
 });
@@ -130,6 +132,7 @@ function Screen() {
       <div className={styles["window-content"]} id={SlotID.AppBody}>
         <Routes>
           <Route path={Path.Login} element={<Login />} />
+          <Route path={Path.Wechat} element={<Wechat />} />
           <Route path={Path.Home} element={<Chat />} />
           <Route path={Path.NewChat} element={<NewChat />} />
           <Route path={Path.Masks} element={<MaskPage />} />
