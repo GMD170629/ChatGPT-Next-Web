@@ -75,17 +75,6 @@ const fr: LocaleType = {
       Options: {
         cn: "简体中文",
         en: "English",
-        tw: "繁體中文",
-        fr: "Français",
-        es: "Español",
-        it: "Italiano",
-        tr: "Türkçe",
-        jp: "日本語",
-        de: "Deutsch",
-        vi: "Vietnamese",
-        ru: "Русский",
-        cs: "Čeština",
-        ko: "한국어"
       },
     },
 
