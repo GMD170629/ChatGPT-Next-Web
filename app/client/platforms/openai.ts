@@ -110,7 +110,8 @@ export class ChatGPTApi implements LLMApi {
                 const resJson = await res.clone().json();
                 extraInfo = prettyObject(resJson);
               } catch {}
-
+              console.log("res.status");
+              console.log(res.status);
               if (res.status === 401) {
                 responseTexts.push(Locale.Error.Unauthorized);
               }
@@ -188,7 +189,8 @@ export class ChatGPTApi implements LLMApi {
         headers: getHeaders(),
       }),
     ]);
-
+    console.log("used.status");
+    console.log(used.status);
     if (used.status === 401) {
       throw new Error(Locale.Error.Unauthorized);
     }

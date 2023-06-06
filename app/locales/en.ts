@@ -3,9 +3,12 @@ import type { LocaleType } from "./index";
 
 const en: LocaleType = {
   WIP: "Coming Soon...",
+  Success: {
+    Authorized: "You have successfully logged in, please start using.",
+  },
   Error: {
     Unauthorized:
-      "Unauthorized access, please click [Login Now] (/#/login) to start using.",
+      "Unauthorized access, please click [Login Now](/#/login) to start using.",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
@@ -33,7 +36,7 @@ const en: LocaleType = {
     Send: "Send",
     Config: {
       Reset: "Reset to Default",
-      SaveAs: "Save as Mask",
+      SaveAs: "Save as Role",
     },
   },
   Export: {
@@ -62,9 +65,11 @@ const en: LocaleType = {
     Title: "Settings",
     SubTitle: "All Settings",
     Actions: {
+      Logout: "Log out of login",
       ClearAll: "Clear All Data",
       ResetAll: "Reset All Settings",
       Close: "Close",
+      ConfirmLogoutAll: "Are you sure to log out?",
       ConfirmResetAll: "Are you sure you want to reset all configurations?",
       ConfirmClearAll: "Are you sure you want to reset all data?",
     },
@@ -108,8 +113,8 @@ const en: LocaleType = {
       SubTitle: "Preview markdown in bubble",
     },
     Mask: {
-      Title: "Mask Splash Screen",
-      SubTitle: "Show a mask splash screen before starting new chat",
+      Title: "Role Splash Screen",
+      SubTitle: "Show a Role splash screen before starting new chat",
     },
     Prompt: {
       Disable: {
@@ -199,7 +204,7 @@ const en: LocaleType = {
     Name: "Plugin",
   },
   Mask: {
-    Name: "Mask",
+    Name: "Role",
     Page: {
       Title: "Prompt Template",
       SubTitle: (count: number) => `${count} prompt templates`,
@@ -228,8 +233,8 @@ const en: LocaleType = {
   NewChat: {
     Return: "Return",
     Skip: "Skip",
-    Title: "Pick a Mask",
-    SubTitle: "Chat with the Soul behind the Mask",
+    Title: "Pick a Role",
+    SubTitle: "Chat with the Soul behind the Role",
     More: "Find More",
     NotShow: "Not Show Again",
     ConfirmNoShow: "Confirm to disable？You can enable it in settings later.",

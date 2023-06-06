@@ -2,6 +2,9 @@ import { SubmitKey } from "../store/config";
 
 const cn = {
   WIP: "该功能仍在开发中……",
+  Success: {
+    Authorized: "您已经成功登录，请开始使用。",
+  },
   Error: {
     Unauthorized: "暂未登录，请点击[立即登录](/#/login)开始使用。",
     UnVip: "暂无权限，请前往[购买](/#/login)页购买产品，开始使用。",
@@ -69,7 +72,7 @@ const cn = {
       ConfirmClearAll: "确认清除所有数据？",
     },
     Lang: {
-      Name: "Language", // ATTENTION: if you wanna add a new translation, please do not translate this value, leave it as `Language`
+      Name: "语言", // ATTENTION: if you wanna add a new translation, please do not translate this value, leave it as `Language`
       All: "所有语言",
       Options: {
         cn: "简体中文",

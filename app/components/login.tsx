@@ -7,6 +7,7 @@ import { isWeixin } from "@/app/utils/function";
 import { useAccessStore } from "@/app/store";
 import { useNavigate } from "react-router-dom";
 import { Path } from "../constant";
+import Locale from "@/app/locales";
 export default function LoginPage() {
   const accessStore = useAccessStore();
   let token = "";
@@ -16,7 +17,9 @@ export default function LoginPage() {
         let newToken = getToken();
         accessStore.updateToken(newToken);
         clearInterval(interval);
+
         getUserInfoFormApi().then(() => {
+          alert(Locale.Success.Authorized);
           window.open("/", "_self");
         });
       });

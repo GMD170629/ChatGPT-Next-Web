@@ -12,6 +12,7 @@ import { api, RequestMessage } from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 import { createChat, pushChatMessage } from "@/app/api/chat";
+import { getToken } from "@/app/utils/token";
 
 export type ChatMessage = RequestMessage & {
   date: string;
@@ -120,6 +121,8 @@ interface ChatStore {
 
   clearAllData: () => void;
 }
+const token = getToken();
+console.log(token);
 
 function countMessages(msgs: ChatMessage[]) {
   return msgs.reduce((pre, cur) => pre + cur.content.length, 0);
@@ -341,8 +344,9 @@ export const useChatStore = create<ChatStore>()(
             content: userMessage.content,
             role: userMessage.role,
           };
-
-          pushChatMsg(<number>session.id, userData);
+          if (token) {
+            pushChatMsg(<number>session.id, userData);
+          }
 
           session.messages.push(userMessage);
           session.messages.push(botMessage);
@@ -371,7 +375,9 @@ export const useChatStore = create<ChatStore>()(
               role: botMessage.role,
               model: botMessage.model,
             };
-            pushChatMsg(<number>session.id, botData);
+            if (token) {
+              pushChatMsg(<number>session.id, botData);
+            }
             set(() => ({}));
           },
           onError(error) {
