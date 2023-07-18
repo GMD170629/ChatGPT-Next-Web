@@ -31,15 +31,18 @@ export class ChatGPTApi implements LLMApi {
       role: v.role,
       content: v.content,
     }));
-
+    console.log(messages);
     const modelConfig = {
       ...useAppConfig.getState().modelConfig,
-      ...useChatStore.getState().currentSession().mask.modelConfig,
+      /*      ...useChatStore.getState().currentSession().mask.modelConfig,
       ...{
         model: options.config.model,
-      },
+      },*/
     };
-
+    console.log(useAppConfig.getState().modelConfig);
+    console.log(useChatStore.getState().currentSession().mask.modelConfig);
+    console.log(options.config.model);
+    console.log(modelConfig);
     const requestPayload = {
       messages,
       stream: options.config.stream,

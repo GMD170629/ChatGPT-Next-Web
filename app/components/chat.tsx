@@ -51,7 +51,7 @@ import { IconButton } from "./button";
 import styles from "./home.module.scss";
 import chatStyle from "./chat.module.scss";
 
-import { ListItem, Modal, showModal } from "./ui-lib";
+import { List, ListItem, Modal, showModal } from "./ui-lib";
 import {
   useLocation,
   useNavigate,
@@ -63,6 +63,10 @@ import { Avatar } from "./emoji";
 import { MaskAvatar, MaskConfig } from "./mask";
 import { useMaskStore } from "../store/mask";
 import { useCommand } from "../command";
+import {
+  ModelConfigList,
+  ModelConfigListTop,
+} from "@/app/components/model-config";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
@@ -660,6 +664,16 @@ export function Chat() {
           <div className="window-header-sub-title">
             {Locale.Chat.SubTitle(session.messages.length)}
           </div>
+        </div>
+        <div className="window-toggle-lan">
+          <ModelConfigListTop
+            modelConfig={config.modelConfig}
+            updateConfig={(updater) => {
+              const modelConfig = { ...config.modelConfig };
+              updater(modelConfig);
+              config.update((config) => (config.modelConfig = modelConfig));
+            }}
+          />
         </div>
         <div className="window-actions">
           <div className={"window-action-button" + " " + styles.mobile}>

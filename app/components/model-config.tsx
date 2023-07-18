@@ -138,3 +138,30 @@ export function ModelConfigList(props: {
     </>
   );
 }
+
+export function ModelConfigListTop(props: {
+  modelConfig: ModelConfig;
+  updateConfig: (updater: (config: ModelConfig) => void) => void;
+}) {
+  return (
+    <>
+      <Select
+        value={props.modelConfig.model}
+        onChange={(e) => {
+          props.updateConfig(
+            (config) =>
+              (config.model = ModalConfigValidator.model(
+                e.currentTarget.value,
+              )),
+          );
+        }}
+      >
+        {ALL_MODELS.map((v) => (
+          <option value={v.name} key={v.name} disabled={!v.available}>
+            {v.name}
+          </option>
+        ))}
+      </Select>
+    </>
+  );
+}
