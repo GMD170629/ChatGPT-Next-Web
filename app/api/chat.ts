@@ -27,3 +27,14 @@ export const pushChatMessage = async (id: number, data: object) => {
   const res = await response.json();
   return res;
 };
+export const getGpt4vip = async () => {
+  const response = await fetch(
+    "https://apitest.qingline.net/api/user/vip/gpt4vip",
+    {
+      method: "get",
+      headers: myHeaders,
+    },
+  );
+  const res = await response.json();
+  return res;
+};

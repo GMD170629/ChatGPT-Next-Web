@@ -5,7 +5,7 @@ import { trimTopic } from "../utils";
 
 import Locale from "../locales";
 import { showToast } from "../components/ui-lib";
-import { ModelType } from "./config";
+import { ModelType, useAppConfig } from "./config";
 import { createEmptyMask, Mask } from "./mask";
 import { REQUEST_TIMEOUT_MS, StoreKey } from "../constant";
 import { api, RequestMessage } from "../client/api";
@@ -64,7 +64,6 @@ export interface msgData {
   role: string;
   model?: string;
 }
-
 function pushChatMsg(id: number, messageData: any) {
   pushChatMessage(id, messageData).then((res) => {
     console.log(["push_message"], res);
@@ -100,6 +99,7 @@ interface ChatStore {
   inited: boolean;
   clearSessions: () => void;
   init: () => void;
+  getGpt4VipCount: () => any;
   moveSession: (from: number, to: number) => void;
   selectSession: (index: number) => void;
   newSession: (mask?: Mask) => void;
@@ -122,7 +122,6 @@ interface ChatStore {
   clearAllData: () => void;
 }
 const token = getToken();
-console.log(token);
 
 function countMessages(msgs: ChatMessage[]) {
   return msgs.reduce((pre, cur) => pre + cur.content.length, 0);
@@ -161,7 +160,9 @@ export const useChatStore = create<ChatStore>()(
         }
         // Add your initialization code here
       },
-
+      getGpt4VipCount: () => {
+        return window.sessionStorage.getItem("gpt4vip");
+      },
       clearSessions: () => {
         createEmptySession().then((session) => {
           set(() => ({
@@ -354,15 +355,28 @@ export const useChatStore = create<ChatStore>()(
 
         // make request
         console.log("[User Input] ", sendMessages);
+        console.log(modelConfig);
         api.llm.chat({
           messages: sendMessages,
           config: { ...modelConfig, stream: true },
           onUpdate(message) {
+            console.log("onUpdate");
             botMessage.streaming = true;
             botMessage.content = message;
             set(() => ({}));
           },
           onFinish(message) {
+            console.log("onFinish");
+            if (useAppConfig.getState().modelConfig.model == "gpt-4") {
+              let count: any = window.sessionStorage.getItem("gpt4vip");
+              if (count && count > 0) {
+                --count;
+                window.sessionStorage.setItem("gpt4vip", count);
+              } else {
+                window.sessionStorage.setItem("gpt4vip", "0");
+              }
+            }
+
             botMessage.streaming = false;
             botMessage.content = message;
             get().onNewMessage(botMessage);
@@ -381,6 +395,7 @@ export const useChatStore = create<ChatStore>()(
             set(() => ({}));
           },
           onError(error) {
+            console.log("onError");
             const isAborted = error.message.includes("aborted");
             if (
               botMessage.content !== Locale.Error.Unauthorized &&
@@ -401,6 +416,7 @@ export const useChatStore = create<ChatStore>()(
             console.error("[Chat] error ", error);
           },
           onController(controller) {
+            console.log("onController");
             // collect controller for stop/retry
             ChatControllerPool.addController(
               sessionIndex,

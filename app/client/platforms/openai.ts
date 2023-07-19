@@ -39,10 +39,7 @@ export class ChatGPTApi implements LLMApi {
         model: options.config.model,
       },*/
     };
-    console.log(useAppConfig.getState().modelConfig);
-    console.log(useChatStore.getState().currentSession().mask.modelConfig);
-    console.log(options.config.model);
-    console.log(modelConfig);
+
     const requestPayload = {
       messages,
       stream: options.config.stream,
@@ -94,7 +91,6 @@ export class ChatGPTApi implements LLMApi {
               "[OpenAI] request response content type: ",
               contentType,
             );
-
             if (contentType?.startsWith("text/plain")) {
               responseText = await res.clone().text();
               return finish();
@@ -113,8 +109,6 @@ export class ChatGPTApi implements LLMApi {
                 const resJson = await res.clone().json();
                 extraInfo = prettyObject(resJson);
               } catch {}
-              console.log("res.status");
-              console.log(res.status);
               if (res.status === 401) {
                 responseTexts.push(Locale.Error.Unauthorized);
               }

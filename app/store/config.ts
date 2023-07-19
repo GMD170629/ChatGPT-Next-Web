@@ -24,9 +24,7 @@ export const DEFAULT_CONFIG = {
   tightBorder: false,
   sendPreviewBubble: true,
   sidebarWidth: 300,
-
   disablePromptHint: false,
-
   dontShowMaskSplashScreen: false, // dont show splash screen when create chat
 
   modelConfig: {
@@ -39,7 +37,6 @@ export const DEFAULT_CONFIG = {
     compressMessageLengthThreshold: 1000,
   },
 };
-
 export type ChatConfig = typeof DEFAULT_CONFIG;
 
 export type ChatConfigStore = ChatConfig & {
@@ -49,7 +46,7 @@ export type ChatConfigStore = ChatConfig & {
 
 export type ModelConfig = ChatConfig["modelConfig"];
 
-const ENABLE_GPT4 = true;
+let ENABLE_GPT4 = true;
 
 export const ALL_MODELS = [
   {
@@ -61,7 +58,6 @@ export const ALL_MODELS = [
     available: ENABLE_GPT4,
   },
 ] as const;
-
 export type ModelType = (typeof ALL_MODELS)[number]["name"];
 
 export function limitNumber(
@@ -82,7 +78,6 @@ export function limitModel(name: string) {
     ? name
     : ALL_MODELS[0].name;
 }
-
 export const ModalConfigValidator = {
   model(x: string) {
     return limitModel(x) as ModelType;
@@ -97,12 +92,10 @@ export const ModalConfigValidator = {
     return limitNumber(x, 0, 1, 1);
   },
 };
-
 export const useAppConfig = create<ChatConfigStore>()(
   persist(
     (set, get) => ({
       ...DEFAULT_CONFIG,
-
       reset() {
         set(() => ({ ...DEFAULT_CONFIG }));
       },

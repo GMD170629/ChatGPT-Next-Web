@@ -8,19 +8,33 @@ import { useAccessStore } from "@/app/store";
 import { useNavigate } from "react-router-dom";
 import { Path } from "../constant";
 import Locale from "@/app/locales";
+import { getGpt4vip } from "@/app/api/chat";
+
+export function getGpt4vipCount() {}
+
 export default function LoginPage() {
   const accessStore = useAccessStore();
   let token = "";
+  let gpt4vip;
   let interval = setInterval(() => {
     if (token !== "") {
       login(token).then(() => {
         let newToken = getToken();
         accessStore.updateToken(newToken);
         clearInterval(interval);
-
         getUserInfoFormApi().then(() => {
-          alert(Locale.Success.Authorized);
-          window.open("/", "_self");
+          getGpt4vip().then((res) => {
+            console.log(["getGpt4vip"], res);
+            if (res.code == 0) {
+              gpt4vip = res.data.remaining_count;
+            } else {
+              gpt4vip = 0;
+            }
+            // 存储 gpt4vip 到会话存储
+            window.sessionStorage.setItem("gpt4vip", gpt4vip);
+            alert(Locale.Success.Authorized);
+            window.open("/", "_self");
+          });
         });
       });
     }

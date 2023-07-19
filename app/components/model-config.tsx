@@ -3,6 +3,7 @@ import { ALL_MODELS, ModalConfigValidator, ModelConfig } from "../store";
 import Locale from "../locales";
 import { InputRange } from "./input-range";
 import { List, ListItem, Select } from "./ui-lib";
+import styles from "@/app/components/login.module.scss";
 
 export function ModelConfigList(props: {
   modelConfig: ModelConfig;

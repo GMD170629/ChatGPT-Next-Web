@@ -27,7 +27,14 @@
     margin-top: 5px;
   }
 }
-
+.window-toggle-lan{
+  display: flex;
+  align-items: center;
+  .count{
+    font-size: 14px;
+    padding-left: 10px;
+  }
+}
 .window-actions {
   display: inline-flex;
 }

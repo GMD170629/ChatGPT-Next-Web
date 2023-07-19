@@ -63,15 +63,26 @@ import { Avatar } from "./emoji";
 import { MaskAvatar, MaskConfig } from "./mask";
 import { useMaskStore } from "../store/mask";
 import { useCommand } from "../command";
-import {
-  ModelConfigList,
-  ModelConfigListTop,
-} from "@/app/components/model-config";
+import { ModelConfigListTop } from "@/app/components/model-config";
+import { getGpt4vip } from "@/app/api/chat";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
 });
-
+let gpt4vip;
+function getGpt4VipCount() {
+  getGpt4vip().then((res) => {
+    console.log(["getGpt4vip"], res);
+    if (res.code == 0) {
+      gpt4vip = res.data.remaining_count;
+    } else {
+      gpt4vip = 0;
+    }
+    // 存储 gpt4vip 到会话存储
+    window.sessionStorage.setItem("gpt4vip", gpt4vip);
+  });
+}
+getGpt4VipCount();
 function exportMessages(messages: ChatMessage[], topic: string) {
   const mdText =
     `# ${topic}\n\n` +
@@ -665,16 +676,20 @@ export function Chat() {
             {Locale.Chat.SubTitle(session.messages.length)}
           </div>
         </div>
-        <div className="window-toggle-lan">
-          <ModelConfigListTop
-            modelConfig={config.modelConfig}
-            updateConfig={(updater) => {
-              const modelConfig = { ...config.modelConfig };
-              updater(modelConfig);
-              config.update((config) => (config.modelConfig = modelConfig));
-            }}
-          />
-        </div>
+        {chatStore.getGpt4VipCount() && (
+          <div className="window-toggle-lan">
+            <ModelConfigListTop
+              modelConfig={config.modelConfig}
+              updateConfig={(updater) => {
+                const modelConfig = { ...config.modelConfig };
+                updater(modelConfig);
+                config.update((config) => (config.modelConfig = modelConfig));
+              }}
+            />
+            <span className="count">{chatStore.getGpt4VipCount()}/100</span>
+          </div>
+        )}
+
         <div className="window-actions">
           <div className={"window-action-button" + " " + styles.mobile}>
             <IconButton
