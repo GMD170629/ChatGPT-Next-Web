@@ -30,6 +30,10 @@
 .window-toggle-lan{
   display: flex;
   align-items: center;
+  .name{
+    font-size: 14px;
+    padding-right: 10px;
+  }
   .count{
     font-size: 14px;
     padding-left: 10px;

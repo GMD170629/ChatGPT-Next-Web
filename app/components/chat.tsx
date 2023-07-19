@@ -678,6 +678,7 @@ export function Chat() {
         </div>
         {chatStore.getGpt4VipCount() && (
           <div className="window-toggle-lan">
+            <span className="name">模型</span>
             <ModelConfigListTop
               modelConfig={config.modelConfig}
               updateConfig={(updater) => {
@@ -686,7 +687,9 @@ export function Chat() {
                 config.update((config) => (config.modelConfig = modelConfig));
               }}
             />
-            <span className="count">{chatStore.getGpt4VipCount()}/100</span>
+            {useAppConfig.getState().modelConfig.model == "gpt-4" && (
+              <span className="count">{chatStore.getGpt4VipCount()}/100</span>
+            )}
           </div>
         )}
 
