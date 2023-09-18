@@ -4,7 +4,7 @@ myHeaders.append("Content-Type", "application/json");
 let token = getBearToken();
 myHeaders.append("Authorization", token);
 export const createChat = async () => {
-  const response = await fetch("https://apitest.qingline.net/api/chat/create", {
+  const response = await fetch("https://api.qingline.net/api/chat/create", {
     method: "POST",
   });
   const res = await response.json();
@@ -17,7 +17,7 @@ export const createChat = async () => {
 }*/
 export const pushChatMessage = async (id: number, data: object) => {
   const response = await fetch(
-    "https://apitest.qingline.net/api/chat/" + id + "/push-message",
+    "https://api.qingline.net/api/chat/" + id + "/push-message",
     {
       method: "POST",
       headers: myHeaders,
@@ -29,7 +29,7 @@ export const pushChatMessage = async (id: number, data: object) => {
 };
 export const getGpt4vip = async () => {
   const response = await fetch(
-    "https://apitest.qingline.net/api/user/vip/gpt4vip",
+    "https://api.qingline.net/api/user/vip/gpt4vip",
     {
       method: "get",
       headers: myHeaders,
