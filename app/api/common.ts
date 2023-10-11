@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { getBearToken } from "@/app/utils/token";
 
 const OPENAI_URL = "api.openai.com";
 const DEFAULT_PROTOCOL = "https";
@@ -7,12 +8,12 @@ const BASE_URL = process.env.BASE_URL ?? OPENAI_URL;
 
 export async function requestOpenai(req: NextRequest) {
   const controller = new AbortController();
-  const authValue = req.headers.get("Authorization") ?? "";
+  const authValue = getBearToken() ?? "";
   const openaiPath = `${req.nextUrl.pathname}`.replaceAll(
     "/api/openai/v1/",
     "api/",
   );
-
+  console.log("authvalue", authValue);
   let baseUrl = BASE_URL;
 
   if (!baseUrl.startsWith("http")) {
