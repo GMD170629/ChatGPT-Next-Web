@@ -16,7 +16,7 @@ export function getToken() {
   return Cookies.get(tokenKey);
 }
 export function getBearToken() {
-  return "Bearer " + Cookies.get(tokenKey);
+  return Cookies.get(tokenKey);
 }
 export function removeToken() {
   let domain = document.domain;
