@@ -54,7 +54,7 @@ export const useAccessStore = create<AccessControlStore>()(
         // if (token !== currentToken) {
         //     set(() => ({ token }));
         // }
-        return getBearToken();
+        return getToken();
       },
       isVip() {
         /*判断是否购买产品，但是现在是后台直接判断的权限，暂时没有使用*/
