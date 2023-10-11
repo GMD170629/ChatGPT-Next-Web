@@ -12,8 +12,8 @@ export function Wechat() {
     window.open("#" + Path.Login, "_self");
   } else {
     setToken(access_token);
-    let bearToken = "Bearer " + access_token;
-    accessStore.updateToken(access_token);
+    let bearToken = access_token;
+    // accessStore.updateToken(access_token);
     getUserInfoFormApi().then(() => {
       window.open("/", "_self");
     });

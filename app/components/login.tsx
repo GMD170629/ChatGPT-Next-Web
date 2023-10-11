@@ -20,7 +20,7 @@ export default function LoginPage() {
     if (token !== "") {
       login(token).then(() => {
         let newToken = getToken();
-        accessStore.updateToken(newToken);
+        // accessStore.updateToken(newToken);
         clearInterval(interval);
         getUserInfoFormApi().then(() => {
           getGpt4vip().then((res) => {

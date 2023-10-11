@@ -7,16 +7,18 @@ export function setToken(token: string) {
   let domain = document.domain;
   let flag = domain.indexOf(".qingline.net") != -1;
   if (flag) {
-    return Cookies.set(tokenKey, token, { domain: ".qingline.net" });
+    return Cookies.set(tokenKey, `Bearer ${token}`, {
+      domain: ".qingline.net",
+    });
   } else {
-    return Cookies.set(tokenKey, token);
+    return Cookies.set(tokenKey, `Bearer ${token}`);
   }
 }
 export function getToken() {
-  return Cookies.get(tokenKey);
+  return Cookies.get(tokenKey) ?? "";
 }
 export function getBearToken() {
-  return Cookies.get(tokenKey);
+  return Cookies.get(tokenKey) ?? "";
 }
 export function removeToken() {
   let domain = document.domain;
@@ -38,7 +40,6 @@ export function setUserInfo(data: object) {
   } else {
     return Cookies.set(userinfoKey, JSON.stringify(data));
   }
-  console.log(data);
 }
 export function getUserInfo() {
   return Cookies.get(userinfoKey);

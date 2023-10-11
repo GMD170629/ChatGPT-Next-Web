@@ -65,7 +65,7 @@ export const useAccessStore = create<AccessControlStore>()(
         // get().fetch();
         // // has token or has code or disabled access control
         // return get().token != "";
-
+        console.log("token", getToken());
         return getToken() != "";
       },
       fetch() {
