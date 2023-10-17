@@ -53,5 +53,11 @@ export function getUser() {
   }
 }
 export function removeUserInfo() {
-  return Cookies.remove(userinfoKey);
+  let domain = document.domain;
+  let flag = domain.indexOf(".qingline.net") != -1;
+  if (flag) {
+    return Cookies.remove(userinfoKey, { domain: ".qingline.net" });
+  } else {
+    return Cookies.remove(userinfoKey);
+  }
 }
