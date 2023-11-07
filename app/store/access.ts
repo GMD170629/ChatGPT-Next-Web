@@ -85,7 +85,7 @@ export const useAccessStore = create<AccessControlStore>()(
 
             if (!res.enableGPT4) {
               ALL_MODELS.forEach((model) => {
-                if (model.name.startsWith("gpt-4-32k")) {
+                if (model.name.startsWith("gpt-4-1106-preview")) {
                   (model as any).available = false;
                 }
               });
