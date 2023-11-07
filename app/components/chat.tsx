@@ -687,7 +687,7 @@ export function Chat() {
                 config.update((config) => (config.modelConfig = modelConfig));
               }}
             />
-            {useAppConfig.getState().modelConfig.model == "gpt-4" && (
+            {useAppConfig.getState().modelConfig.model == "gpt-4-32k" && (
               <span className="count">{chatStore.getGpt4VipCount()}/100</span>
             )}
           </div>

@@ -38,7 +38,6 @@ export function setUserInfo(data: object) {
   } else {
     return Cookies.set(userinfoKey, JSON.stringify(data));
   }
-  console.log(data);
 }
 export function getUserInfo() {
   return Cookies.get(userinfoKey);

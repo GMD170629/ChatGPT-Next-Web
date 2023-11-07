@@ -54,7 +54,7 @@ export const ALL_MODELS = [
     available: true,
   },
   {
-    name: "gpt-4",
+    name: "gpt-4-32k",
     available: ENABLE_GPT4,
   },
 ] as const;
