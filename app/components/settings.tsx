@@ -227,7 +227,7 @@ export function Settings() {
   const logout = () => {
     resetToken()
       .then(() => {
-        accessStore.updateToken("");
+        // accessStore.updateToken("");
         chatStore.clearSessions();
         navigate("/");
       })

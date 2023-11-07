@@ -68,8 +68,9 @@ export function getHeaders() {
   const validString = (x: string) => x && x.length > 0;
 
   // use user's api key first
-  if (validString(accessStore.token)) {
-    headers.Authorization = makeBearer(accessStore.token);
+
+  if (accessStore.isAuthorized()) {
+    headers.Authorization = accessStore.getBearToken();
   } else if (
     accessStore.enabledAccessControl() &&
     validString(accessStore.accessCode)
@@ -78,6 +79,17 @@ export function getHeaders() {
       ACCESS_CODE_PREFIX + accessStore.accessCode,
     );
   }
+
+  // if (validString(accessStore.token)) {
+  //   headers.Authorization = makeBearer(accessStore.token);
+  // } else if (
+  //   accessStore.enabledAccessControl() &&
+  //   validString(accessStore.accessCode)
+  // ) {
+  //   headers.Authorization = makeBearer(
+  //     ACCESS_CODE_PREFIX + accessStore.accessCode,
+  //   );
+  // }
 
   return headers;
 }

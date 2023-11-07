@@ -4,7 +4,7 @@ import { StoreKey } from "../constant";
 import { getHeaders } from "../client/api";
 import { BOT_HELLO } from "./chat";
 import { ALL_MODELS } from "./config";
-import { getUser } from "@/app/utils/token";
+import { getBearToken, getToken, getUser, setToken } from "@/app/utils/token";
 
 export interface AccessControlStore {
   accessCode: string;
@@ -15,6 +15,7 @@ export interface AccessControlStore {
   openaiUrl: string;
 
   updateToken: (_: string) => void;
+  getBearToken: () => string;
   updateCode: (_: string) => void;
   enabledAccessControl: () => boolean;
   isAuthorized: () => boolean;
@@ -42,10 +43,18 @@ export const useAccessStore = create<AccessControlStore>()(
         set(() => ({ accessCode: code }));
       },
       updateToken(token: string) {
-        const currentToken = get().token;
-        if (token !== currentToken) {
-          set(() => ({ token }));
-        }
+        // const currentToken = get().token;
+        // if (token !== currentToken) {
+        //     set(() => ({ token }));
+        // }
+        setToken(token);
+      },
+      getBearToken() {
+        // const currentToken = get().token;
+        // if (token !== currentToken) {
+        //     set(() => ({ token }));
+        // }
+        return getToken();
       },
       isVip() {
         /*判断是否购买产品，但是现在是后台直接判断的权限，暂时没有使用*/
@@ -53,9 +62,11 @@ export const useAccessStore = create<AccessControlStore>()(
         return user.isVip == 1;
       },
       isAuthorized() {
-        get().fetch();
-        // has token or has code or disabled access control
-        return get().token != "";
+        // get().fetch();
+        // // has token or has code or disabled access control
+        // return get().token != "";
+        console.log("token", getToken());
+        return getToken() != "";
       },
       fetch() {
         if (fetchState > 0) return;

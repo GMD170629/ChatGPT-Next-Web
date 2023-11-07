@@ -53,7 +53,7 @@ export class ChatGPTApi implements LLMApi {
     const shouldStream = !!options.config.stream;
     const controller = new AbortController();
     options.onController?.(controller);
-
+    console.log("shouldStream", shouldStream);
     try {
       const chatPath = this.path(this.ChatPath);
       const chatPayload = {
@@ -139,6 +139,7 @@ export class ChatGPTApi implements LLMApi {
             }
           },
           onclose() {
+            console.log("onclose");
             finish();
           },
           onerror(e) {
