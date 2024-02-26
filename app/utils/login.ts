@@ -11,9 +11,8 @@ export function login(token: string) {
     tokenLogin({ token: token })
       .then((res) => {
         console.log(res);
-        const { code, data } = res;
-        if (code == 0) {
-          setToken(data.accessToken);
+        if (res.access_token) {
+          setToken(res.access_token);
           resolve(res);
         }
       })
