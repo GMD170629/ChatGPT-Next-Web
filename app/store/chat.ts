@@ -368,9 +368,7 @@ export const useChatStore = create<ChatStore>()(
           },
           onFinish(message) {
             console.log("onFinish");
-            if (
-              useAppConfig.getState().modelConfig.model == "gpt-4-1106-preview"
-            ) {
+            if (useAppConfig.getState().modelConfig.model == "gpt-4o") {
               let count: any = window.sessionStorage.getItem("gpt4vip");
               if (count && count > 0) {
                 --count;
