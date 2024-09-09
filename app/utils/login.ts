@@ -10,7 +10,7 @@ export function login(token: string) {
   return new Promise((resolve, reject) => {
     tokenLogin({ token: token })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.access_token) {
           setToken(res.access_token);
           resolve(res);
@@ -28,7 +28,7 @@ export function getUserInfoFormApi() {
         let { code, data } = res;
         if (code == 0) {
           setUserInfo(data);
-          console.log("setUserInfo");
+          //console.log("setUserInfo");
           resolve(res);
         }
       })

@@ -65,7 +65,7 @@ export const useAccessStore = create<AccessControlStore>()(
         // get().fetch();
         // // has token or has code or disabled access control
         // return get().token != "";
-        console.log("token", getToken());
+        // //console.log("token", getToken());
         return getToken() != "";
       },
       fetch() {
@@ -80,7 +80,7 @@ export const useAccessStore = create<AccessControlStore>()(
         })
           .then((res) => res.json())
           .then((res: DangerConfig) => {
-            console.log("[Config] got config from server", res);
+            //console.log("[Config] got config from server", res);
             set(() => ({ ...res }));
 
             if (!res.enableGPT4) {

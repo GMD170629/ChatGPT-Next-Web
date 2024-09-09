@@ -66,7 +66,7 @@ export interface msgData {
 }
 function pushChatMsg(id: number, messageData: any) {
   pushChatMessage(id, messageData).then((res) => {
-    console.log(["push_message"], res);
+    //console.log(["push_message"], res);
   });
 }
 
@@ -151,7 +151,7 @@ export const useChatStore = create<ChatStore>()(
       inited: false,
       // Add an init function to be called when the store is created
       init: () => {
-        /*   console.log("init", get().sessions[0].id > 10000000 && !get().inited);*/
+        /*   //console.log("init", get().sessions[0].id > 10000000 && !get().inited);*/
         if (get().sessions[0].id > 10000000 && !get().inited) {
           set(() => ({
             inited: true,
@@ -355,19 +355,19 @@ export const useChatStore = create<ChatStore>()(
         });
 
         // make request
-        console.log("[User Input] ", sendMessages);
-        console.log(modelConfig);
+        //console.log("[User Input] ", sendMessages);
+        //console.log(modelConfig);
         api.llm.chat({
           messages: sendMessages,
           config: { ...modelConfig, stream: true },
           onUpdate(message) {
-            console.log("onUpdate");
+            //console.log("onUpdate");
             botMessage.streaming = true;
             botMessage.content = message;
             set(() => ({}));
           },
           onFinish(message) {
-            console.log("onFinish");
+            //console.log("onFinish");
             if (useAppConfig.getState().modelConfig.model == "gpt-4o") {
               let count: any = window.sessionStorage.getItem("gpt4vip");
               if (count && count > 0) {
@@ -396,7 +396,7 @@ export const useChatStore = create<ChatStore>()(
             set(() => ({}));
           },
           onError(error) {
-            console.log("onError");
+            //console.log("onError");
             const isAborted = error.message.includes("aborted");
             if (
               botMessage.content !== Locale.Error.Unauthorized &&
@@ -417,7 +417,7 @@ export const useChatStore = create<ChatStore>()(
             console.error("[Chat] error ", error);
           },
           onController(controller) {
-            console.log("onController");
+            //console.log("onController");
             // collect controller for stop/retry
             ChatControllerPool.addController(
               sessionIndex,
@@ -561,12 +561,12 @@ export const useChatStore = create<ChatStore>()(
 
         const lastSummarizeIndex = session.messages.length;
 
-        console.log(
-          "[Chat History] ",
-          toBeSummarizedMsgs,
-          historyMsgLength,
-          modelConfig.compressMessageLengthThreshold,
-        );
+        // console.log(
+        //   "[Chat History] ",
+        //   toBeSummarizedMsgs,
+        //   historyMsgLength,
+        //   modelConfig.compressMessageLengthThreshold,
+        // );
 
         if (
           historyMsgLength > modelConfig.compressMessageLengthThreshold &&
@@ -583,7 +583,7 @@ export const useChatStore = create<ChatStore>()(
               session.memoryPrompt = message;
             },
             onFinish(message) {
-              console.log("[Memory] ", message);
+              //console.log("[Memory] ", message);
               session.lastSummarizeIndex = lastSummarizeIndex;
             },
             onError(err) {

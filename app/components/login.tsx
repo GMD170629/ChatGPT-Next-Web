@@ -24,7 +24,7 @@ export default function LoginPage() {
         clearInterval(interval);
         getUserInfoFormApi().then(() => {
           getGpt4vip().then((res) => {
-            console.log(["getGpt4vip"], res);
+            //console.log(["getGpt4vip"], res);
             if (res.code == 0) {
               gpt4vip = res.data.remaining_count;
             } else {

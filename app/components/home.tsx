@@ -115,7 +115,7 @@ function Screen() {
     loadAsyncGoogleFont();
   }, []);*/
   /*  let user = getUser();
-  console.log(user);*/
+  //console.log(user);*/
   return (
     <div
       className={

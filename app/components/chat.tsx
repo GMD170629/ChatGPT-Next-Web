@@ -72,7 +72,7 @@ const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
 let gpt4vip;
 function getGpt4VipCount() {
   getGpt4vip().then((res) => {
-    console.log(["getGpt4vip"], res);
+    //console.log(["getGpt4vip"], res);
     if (res.code == 0) {
       gpt4vip = res.data.remaining_count;
     } else {

@@ -223,7 +223,7 @@ export function Settings() {
   const hasNewVersion = currentVersion !== remoteId;
 
   const userInfo = getUser();
-  console.log(userInfo);
+  //console.log(userInfo);
   const logout = () => {
     resetToken()
       .then(() => {
@@ -240,14 +240,14 @@ export function Settings() {
       setCheckingUpdate(false);
     });
 
-    console.log(
-      "[Update] local version ",
-      new Date(+updateStore.version).toLocaleString(),
-    );
-    console.log(
-      "[Update] remote version ",
-      new Date(+updateStore.remoteVersion).toLocaleString(),
-    );
+    //console.log(
+    //   "[Update] local version ",
+    //   new Date(+updateStore.version).toLocaleString(),
+    // );
+    //console.log(
+    //   "[Update] remote version ",
+    //   new Date(+updateStore.remoteVersion).toLocaleString(),
+    // );
   }
 
   const usage = {

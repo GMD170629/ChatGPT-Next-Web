@@ -31,7 +31,7 @@ export class ChatGPTApi implements LLMApi {
       role: v.role,
       content: v.content,
     }));
-    console.log(messages);
+    //console.log(messages);
     const modelConfig = {
       ...useAppConfig.getState().modelConfig,
       /*      ...useChatStore.getState().currentSession().mask.modelConfig,
@@ -48,12 +48,12 @@ export class ChatGPTApi implements LLMApi {
       presence_penalty: modelConfig.presence_penalty,
     };
 
-    console.log("[Request] openai payload: ", requestPayload);
+    //console.log("[Request] openai payload: ", requestPayload);
 
     const shouldStream = !!options.config.stream;
     const controller = new AbortController();
     options.onController?.(controller);
-    console.log("shouldStream", shouldStream);
+    //console.log("shouldStream", shouldStream);
     try {
       const chatPath = this.path(this.ChatPath);
       const chatPayload = {
@@ -87,10 +87,10 @@ export class ChatGPTApi implements LLMApi {
           async onopen(res) {
             clearTimeout(requestTimeoutId);
             const contentType = res.headers.get("content-type");
-            console.log(
-              "[OpenAI] request response content type: ",
-              contentType,
-            );
+            //console.log(
+            //   "[OpenAI] request response content type: ",
+            //   contentType,
+            // );
             if (contentType?.startsWith("text/plain")) {
               responseText = await res.clone().text();
               return finish();
@@ -140,7 +140,7 @@ export class ChatGPTApi implements LLMApi {
             }
           },
           onclose() {
-            console.log("onclose");
+            //console.log("onclose");
             finish();
           },
           onerror(e) {
@@ -157,7 +157,7 @@ export class ChatGPTApi implements LLMApi {
         options.onFinish(message);
       }
     } catch (e) {
-      console.log("[Request] failed to make a chat reqeust", e);
+      //console.log("[Request] failed to make a chat reqeust", e);
       options.onError?.(e as Error);
     }
   }
@@ -188,8 +188,8 @@ export class ChatGPTApi implements LLMApi {
         headers: getHeaders(),
       }),
     ]);
-    console.log("used.status");
-    console.log(used.status);
+    //console.log("used.status");
+    //console.log(used.status);
     if (used.status === 401) {
       throw new Error(Locale.Error.Unauthorized);
     }

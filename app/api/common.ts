@@ -21,11 +21,11 @@ export async function requestOpenai(req: NextRequest) {
     baseUrl = `${PROTOCOL}://${baseUrl}`;
   }
 
-  console.log("[Proxy] ", openaiPath);
-  console.log("[Base Url]", baseUrl);
+  //console.log("[Proxy] ", openaiPath);
+  //console.log("[Base Url]", baseUrl);
 
   if (process.env.OPENAI_ORG_ID) {
-    console.log("[Org ID]", process.env.OPENAI_ORG_ID);
+    //console.log("[Org ID]", process.env.OPENAI_ORG_ID);
   }
 
   const timeoutId = setTimeout(() => {
@@ -48,7 +48,7 @@ export async function requestOpenai(req: NextRequest) {
     });
   } catch (err: unknown) {
     if (err instanceof Error && err.name === "AbortError") {
-      console.log("Fetch aborted");
+      //console.log("Fetch aborted");
     } else {
       throw err;
     }
