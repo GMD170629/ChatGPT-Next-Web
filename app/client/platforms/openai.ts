@@ -23,7 +23,7 @@ export class ChatGPTApi implements LLMApi {
   }
 
   extractMessage(res: any) {
-    return res.choices?.at(0)?.message?.content ?? "";
+    return res.content ?? "";
   }
 
   async chat(options: ChatOptions) {
@@ -129,7 +129,7 @@ export class ChatGPTApi implements LLMApi {
             const text = msg.data;
             try {
               const json = JSON.parse(text);
-              const delta = json.choices[0].delta.content;
+              const delta = json.content;
               if (delta) {
                 responseText += delta;
                 options.onUpdate?.(responseText, delta);
